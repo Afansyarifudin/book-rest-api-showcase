@@ -1,0 +1,9 @@
+basePath: /
+host: localhost:8081
+info:
+  contact: {}
+  description: This is a Book RestFul API Using Golang.
+  title: Book RESTFul API
+  version: "1.0"
+paths: {}
+swagger: "2.0"
