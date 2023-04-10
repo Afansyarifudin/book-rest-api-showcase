@@ -5,6 +5,8 @@ import (
 	"book-rest-api-showcase/config"
 
 	_ "book-rest-api-showcase/docs"
+
+	"github.com/joho/godotenv"
 )
 
 // @title Book RESTFull-API
@@ -16,10 +18,10 @@ import (
 // @securityDefinitions.basic  BasicAuth
 
 func init() {
-	// err := godotenv.Load()
-	// if err != nil {
-	// 	panic(err)
-	// }
+	err := godotenv.Load()
+	if err != nil {
+		panic(err)
+	}
 
 	err = config.InitGorm()
 	if err != nil {
