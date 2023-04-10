@@ -6,6 +6,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Response struct {
+	Status  int         `json:"status"`
+	Message string      `json:"message"`
+	Data    interface{} `data:"data"`
+}
+
 var (
 	ErrorNotFound = "record Not Found"
 )
@@ -16,10 +22,11 @@ func Ok(c *gin.Context, data interface{}) {
 	c.JSON(http.StatusOK, data)
 }
 
-func OkWithMessage(c *gin.Context, message interface{}) {
-	c.JSON(http.StatusOK, gin.H{
-		// "status":  http.StatusOK,
-		"message": message,
+func OkWithMessage(c *gin.Context, message string, data interface{}) {
+	c.JSON(http.StatusOK, Response{
+		Status:  http.StatusOK,
+		Message: message,
+		Data:    data,
 	})
 }
 
@@ -38,9 +45,15 @@ func BadRequest(c *gin.Context, message string, data ...interface{}) {
 }
 
 func NotFound(c *gin.Context, message string) {
-	c.JSON(http.StatusNotFound, gin.H{"status": http.StatusNotFound, "message": message})
+	c.JSON(http.StatusNotFound, Response{
+		Status:  http.StatusNotFound,
+		Message: message,
+	})
 }
 
 func InternalServerError(c *gin.Context, message string) {
-	c.JSON(http.StatusInternalServerError, gin.H{"status": http.StatusInternalServerError, "message": message})
+	c.JSON(http.StatusInternalServerError, Response{
+		Status:  http.StatusInternalServerError,
+		Message: message,
+	})
 }

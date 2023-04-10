@@ -12,3 +12,8 @@ type Book struct {
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
 }
+
+type BookReq struct {
+	Namebook string `json:"name_book"`
+	Author   string `json:"author"`
+}

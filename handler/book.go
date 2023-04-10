@@ -14,11 +14,11 @@ import (
 //	@Tags			books
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	model.Book
-//	@Failure		404	{object}	model.Book
-//	@Failure		500	{object}	model.Book
+// 	@Param        	book 	body 	model.BookReq true "Create new book"
+//	@Success		201	{object} helper.Response
+//	@Failure		404	{object} helper.Response
+//	@Failure		500	{object} helper.Response
 //	@Router			/books [post]
-
 func (h HttpServer) CreateBook(c *gin.Context) {
 	in := model.Book{}
 
@@ -35,7 +35,7 @@ func (h HttpServer) CreateBook(c *gin.Context) {
 		return
 	}
 
-	helper.Ok(c, res)
+	helper.OkWithMessage(c, "Book Succesfully Created", res)
 }
 
 // GetAllBooks godoc
@@ -44,9 +44,10 @@ func (h HttpServer) CreateBook(c *gin.Context) {
 //	@Tags			books
 //	@Accept			json
 //	@Produce		json
-//	@Success		201	"Created"
+//	@Success		200	{object} helper.Response
+//	@Failure		404	{object} helper.Response
+//	@Failure		500	{object} helper.Response
 //	@Router			/books [get]
-
 func (h HttpServer) GetAllBooks(c *gin.Context) {
 	res, err := h.app.GetAllBooks()
 	if err != nil {
@@ -61,15 +62,16 @@ func (h HttpServer) GetAllBooks(c *gin.Context) {
 }
 
 // GetBookByID godoc
-//	@Summary		Get detail book for fiven Id
-//	@Description	Get Details of car corresponding to Input ID
+//	@Summary		Get detail book for given Id
+//	@Description	Get Details of book with input ID
 //	@Tags			books
 //	@Accept			json
 //	@Produce		json
 //	@Param			ID	path		int	true	"ID of the book"
-//	@Success		200	{object}	model.Book
+//	@Success		200	{object}	helper.Response
+//	@Failure		404	{object}	helper.Response
+//	@Failure		500	{object}	helper.Response
 //	@Router			/books/{Id} [get]
-
 func (h HttpServer) GetBookByID(c *gin.Context) {
 	id := c.Param("id")
 
@@ -98,9 +100,11 @@ func (h HttpServer) GetBookByID(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			id	path		int	true	"ID book to update"
-//	@Success		200	{object}	model.Book
-//	@Router			/books/{id} {put}
-
+// 	@Param        	book 	body 	model.BookReq true "Update book"
+//	@Success		200	{object}	helper.Response
+//	@Failure		404	{object}	helper.Response
+//	@Failure		500	{object}	helper.Response
+//	@Router			/books/{Id} [put]
 func (h HttpServer) UpdateBook(c *gin.Context) {
 	id := c.Param("id")
 
@@ -120,6 +124,7 @@ func (h HttpServer) UpdateBook(c *gin.Context) {
 	in.ID = idInt
 	res, err := h.app.UpdateBook(in)
 	if err != nil {
+
 		helper.InternalServerError(c, err.Error())
 		return
 	}
@@ -128,15 +133,16 @@ func (h HttpServer) UpdateBook(c *gin.Context) {
 }
 
 // DeleteBook godoc
-//	@Summary		Delete book identified with id
-//	@Description	Delete the book with id
+//	@Summary		Delete Book with Given Id
+//	@Description	Delete Book corResponseing to Input ID
 //	@Tags			books
 //	@Accept			json
 //	@Produce		json
-//	@Param			id	path	int	true	"ID book to be deleted"
-//	@Success		200	"Successfully deleted book"
-//	@Routeer		/books/{id} [delete]
-
+//	@Param			ID	path		int	true	"ID of the book"
+//	@Success		200	{object}	helper.Response
+//	@Failure		404	{object}	helper.Response
+//	@Failure		500	{object}	helper.Response
+//	@Router			/books/{Id} [delete]
 func (h HttpServer) DeleteBook(c *gin.Context) {
 	id := c.Param("id")
 
@@ -156,5 +162,5 @@ func (h HttpServer) DeleteBook(c *gin.Context) {
 		return
 	}
 
-	helper.OkWithMessage(c, "Book deleted successfully")
+	helper.OkWithMessage(c, "Book deleted successfully", nil)
 }

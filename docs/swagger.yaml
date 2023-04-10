@@ -1,9 +1,171 @@
 basePath: /
-host: localhost:8081
+definitions:
+  helper.Response:
+    properties:
+      data: {}
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+  model.BookReq:
+    properties:
+      author:
+        type: string
+      name_book:
+        type: string
+    type: object
+host: 0.0.0.0:8081
 info:
   contact: {}
-  description: This is a Book RestFul API Using Golang.
-  title: Book RESTFul API
+  description: A Book RESTFull API using Gin + GORM
+  title: Book RESTFull-API
   version: "1.0"
-paths: {}
+paths:
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: Get list all of the books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Get list all of the books
+      tags:
+      - books
+    post:
+      consumes:
+      - application/json
+      description: Create Book
+      parameters:
+      - description: Create new book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/model.BookReq'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Create Book
+      tags:
+      - books
+  /books/{Id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Book corResponseing to Input ID
+      parameters:
+      - description: ID of the book
+        in: path
+        name: ID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Delete Book with Given Id
+      tags:
+      - books
+    get:
+      consumes:
+      - application/json
+      description: Get Details of book with input ID
+      parameters:
+      - description: ID of the book
+        in: path
+        name: ID
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Get detail book for given Id
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Update book identified by ID
+      parameters:
+      - description: ID book to update
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update book
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/model.BookReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/helper.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/helper.Response'
+      summary: Update book identified by the given ID
+      tags:
+      - books
+securityDefinitions:
+  BasicAuth:
+    type: basic
 swagger: "2.0"

@@ -4,8 +4,18 @@ import (
 	"book-rest-api-showcase/app"
 	"book-rest-api-showcase/config"
 
+	_ "book-rest-api-showcase/docs"
+
 	"github.com/joho/godotenv"
 )
+
+// @title Book RESTFull-API
+// @Version 1.0
+// @description A Book RESTFull API using Gin + GORM
+
+// @host 0.0.0.0:8081
+// @BasePath /
+// @securityDefinitions.basic  BasicAuth
 
 func init() {
 	err := godotenv.Load()
