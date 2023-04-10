@@ -28,5 +28,4 @@ func RegisterApi(r *gin.Engine, server handler.HttpServer) {
 
 	// r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	r.GET("/docs/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	r.Run(":8081")
 }
